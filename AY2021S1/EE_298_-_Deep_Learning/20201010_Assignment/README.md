@@ -1,10 +1,18 @@
 # MLP and CNN on CIFAR 10  
+
+## Assignment Specifics
+
 The assignment is to build a classifier on CIFAR10 using MLP and CNN with the following specifications:
+
 - Last layer is `Dense`
 - Optimizer must be `SGD`
-The solution should be implemented in a Jupyter notebook using either Keras or Pytorch.
 
+The solution should be implemented in a Jupyter notebook using either Keras or Pytorch.
 Discussed below is a comparison of the models built, and also other observations during the exercise.
+
+## Quick Note
+
+Notebooks were done over at Google Colab. Two notebooks were used, `cifar10_mlp.ipynb` and `cifar10_cnn.ipynb` were used to be able to train simultaneously. `cifar10.ipynb` is a combination of these notebooks.
 
 ## Comparison
 
@@ -12,7 +20,7 @@ Below is a table comparing the accuracy reached by the two models, and the numbe
 
 Model | MLP | CNN
 --- | --- | ----
-Best Accuracy | 55.15% | x%
+Best Accuracy | 55.15% | 75.87% (with 76.17% at epoch 47)
 Number of Parameters | 8,759,114 | 568,490
 
 This apppears to show the efficiency at which CNN can perform the classification task on CIFAR10 as it is able to perform better while utilizing less parameters in order to do so.
@@ -52,10 +60,23 @@ Configuration | Example Hidden Layer Units | Accuracy at 40 epochs
 5-layer larger to smaller number of hidden layer units with some retained units in the middle | [128, 512, 512, 1024, 2048] | 52.91%
 
 ### CNN
+
 While achieving far better accuracy at classification than the MLP model, the CNN model could take quite a while to be trained, which was expected since it has a more complex configuration than MLP.
 
 With CNN, it seems to work well to start off with a small number of filters, and then gradually increase it. In this case, the number of filters can be described like this [32, 32, 32, 64, 64, 64, 128, 128, 128]. Putting in more layers appears to provide better accuracy. As a comparison, when using only [32, 32, 32, 64, 64, 64], the highest accuracy that could be achieved was somewhere around 72%.
 
 However, there is a limit to how many layers can be placed in. CIFAR10 is comprised of images with dimensions of 32 x 32, and with each convolutional layer, it is halved.
 
-For CNN on CIFAR10, it also seems that setting the number of epochs to 30 is a fair number instead of 50.
+Varying the kernel size seems to provide improvements with the accuracy. In some configuration iterations, the same kernel size, 3, was used across all of the layers, and was able to provide an accuracy of around 73%. Varying the kernel size provides the recorded best accuracy.
+
+For CNN on CIFAR10, it also seems that setting the number of epochs to 30 is a fair number instead of 50 as growth for this model seems to be incremental after 30 epochs.
+
+## Points for Improvement
+
+Accuracy can be improved by introducing `Dropout` and `BatchNormalization`, however, these have not yet been discussed in class, and so were not used. As a workaround to those, regularizers (kernel, activity, and bias) were provided. Keras provides APIs for these [here](https://keras.io/api/layers/regularizers/).
+
+- Kernel regularizers apply a penalty on the layer's kernel
+- Bias regularizers apply a penalty on the layer's bias
+- Activity regularizers apply a penalty on the layer's output
+
+These regularization penalties are added to the loss.
