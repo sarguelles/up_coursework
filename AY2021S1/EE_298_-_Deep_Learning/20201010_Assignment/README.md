@@ -57,3 +57,5 @@ While achieving far better accuracy at classification than the MLP model, the CN
 With CNN, it seems to work well to start off with a small number of filters, and then gradually increase it. In this case, the number of filters can be described like this [32, 32, 32, 64, 64, 64, 128, 128, 128]. Putting in more layers appears to provide better accuracy. As a comparison, when using only [32, 32, 32, 64, 64, 64], the highest accuracy that could be achieved was somewhere around 72%.
 
 However, there is a limit to how many layers can be placed in. CIFAR10 is comprised of images with dimensions of 32 x 32, and with each convolutional layer, it is halved.
+
+For CNN on CIFAR10, it also seems that setting the number of epochs to 30 is a fair number instead of 50.
